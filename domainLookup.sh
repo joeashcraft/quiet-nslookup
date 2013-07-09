@@ -26,18 +26,17 @@ EOF
 
 findIP()
 {
-#        dig @$ns $hostQuery
-	host $hostQuery $ns |\
-	grep $hostQuery |\
-	awk '{print $4}'
+	dig +short @${ns} ${hostQuery} | \
+	egrep "^[0-9]" | \
+	head -1
 }
 
 # validateHost doesn't work yet
-validateHost()
-{
-	echo $1 |\
-	egrep "(?=^.{1,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)"
-}
+#validateHost()
+#{
+#	echo $1 |\
+#	egrep "(?=^.{1,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)"
+#}
 
 if [[ $1 != "" ]] ; then
 	findIP
